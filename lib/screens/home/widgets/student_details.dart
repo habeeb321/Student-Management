@@ -10,7 +10,7 @@ class StudentDetails extends StatelessWidget {
   final String photo;
   final int index;
 
-  StudentDetails({
+  const StudentDetails({
     super.key,
     required this.name,
     required this.age,

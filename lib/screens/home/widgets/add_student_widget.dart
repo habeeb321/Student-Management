@@ -13,7 +13,6 @@ class AddStudentWidget extends StatefulWidget {
 }
 
 class _AddStudentWidgetState extends State<AddStudentWidget> {
-  @override
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();

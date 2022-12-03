@@ -24,16 +24,16 @@ class _ScreenHomeState extends State<ScreenHome> {
       appBar: AppBar(
         title: const Text('Home Screen'),
         actions: [
-            IconButton(
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: Search(),
-                );
-              },
-              icon: const Icon(Icons.search),
-            ),
-          ],
+          IconButton(
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: Search(),
+              );
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
       ),
       body: const SafeArea(
         child: ListStudentWidget(),

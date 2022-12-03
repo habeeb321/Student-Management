@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:week_5/db/functions/db_functions.dart';
 import 'package:week_5/db/model/data_model.dart';
 
@@ -10,10 +8,10 @@ class EditStudent extends StatefulWidget {
   final String age;
   final String mobile;
   final String school;
-  late final String image;
+  final String image;
   final int index;
 
-  EditStudent({
+  const EditStudent({
     super.key,
     required this.name,
     required this.age,
@@ -30,11 +28,8 @@ class EditStudent extends StatefulWidget {
 
 class _EditStudentState extends State<EditStudent> {
   TextEditingController _nameController = TextEditingController();
-
   TextEditingController _ageController = TextEditingController();
-
   TextEditingController _mobileController = TextEditingController();
-
   TextEditingController _schoolController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -191,19 +186,5 @@ class _EditStudentState extends State<EditStudent> {
     );
     editList(widget.index, studentmodel);
     Navigator.of(context).pop();
-  }
-
-  Future<void> getPhoto() async {
-    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (photo == null) {
-      return;
-    } else {
-      final photoTemp = File(photo.path);
-      setState(
-        () {
-          widget.image = photoTemp.path;
-        },
-      );
-    }
   }
 }
