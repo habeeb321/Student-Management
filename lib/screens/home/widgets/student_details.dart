@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:week_5/core/constants.dart';
 import 'package:week_5/screens/home/widgets/edit_student.dart';
 
 class StudentDetails extends StatelessWidget {
@@ -39,9 +40,7 @@ class StudentDetails extends StatelessWidget {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   CircleAvatar(
                     radius: 80,
                     backgroundImage: FileImage(
@@ -50,61 +49,35 @@ class StudentDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kHeight20,
                   Text(
                     "Name: $name",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Text(
                     "Age: $age",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Text(
                     "Mobile: $mobile",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Text(
                     "School: $school",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  FloatingActionButton.extended(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => EditStudent(
-                            name: name,
-                            age: age,
-                            mobile: mobile,
-                            school: school,
-                            index: index,
-                            image: photo,
-                            photo: '',
-                          ),
-                        ),
-                      );
-                    },
-                    label: const Text('Edit'),
-                  ),
+                  kHeight20,
                 ],
               ),
             ),

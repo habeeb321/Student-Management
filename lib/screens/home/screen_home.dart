@@ -36,7 +36,10 @@ class _ScreenHomeState extends State<ScreenHome> {
         ],
       ),
       body: const SafeArea(
-        child: ListStudentWidget(),
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: ListStudentWidget(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

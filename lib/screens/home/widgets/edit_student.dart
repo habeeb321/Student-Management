@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:week_5/core/constants.dart';
 import 'package:week_5/db/functions/db_functions.dart';
 import 'package:week_5/db/model/data_model.dart';
 
@@ -61,21 +62,15 @@ class _EditStudentState extends State<EditStudent> {
                     'Edit Student Details',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   CircleAvatar(
                     radius: 80,
                     backgroundImage: FileImage(
                       File(widget.image),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
+                  kHeight10,
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
@@ -91,9 +86,7 @@ class _EditStudentState extends State<EditStudent> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _ageController,
                     decoration: const InputDecoration(
@@ -111,9 +104,7 @@ class _EditStudentState extends State<EditStudent> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _mobileController,
                     decoration: const InputDecoration(
@@ -131,9 +122,7 @@ class _EditStudentState extends State<EditStudent> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _schoolController,
                     decoration: const InputDecoration(
@@ -149,9 +138,7 @@ class _EditStudentState extends State<EditStudent> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -159,11 +146,10 @@ class _EditStudentState extends State<EditStudent> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             onEditSaveButton(context);
-                            Navigator.of(context).pop();
                           }
                         },
                         icon: const Icon(Icons.check),
-                        label: const Text('Save'),
+                        label: const Text('Update'),
                       ),
                     ],
                   ),

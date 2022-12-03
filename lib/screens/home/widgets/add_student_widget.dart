@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:week_5/core/constants.dart';
 import 'package:week_5/db/functions/db_functions.dart';
 import 'package:week_5/db/model/data_model.dart';
 import 'package:week_5/screens/home/screen_home.dart';
@@ -35,13 +36,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
               key: _formKey,
               child: Column(
                 children: [
-                  const Text(
-                    'Add Student Details',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   _photo?.path == null
                       ? const CircleAvatar(
                           radius: 80,
@@ -55,9 +50,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                           ),
                           radius: 60,
                         ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -76,46 +69,33 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    'Enter Details',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                 kHeight10,
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter your name',
-                      labelText: 'Name',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Required Name';
+                        return 'Your Name is required';
                       } else {
                         return null;
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _ageController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter your age',
-                      labelText: 'Age',
                     ),
                     validator: (
                       value,
                     ) {
                       if (value == null || value.isEmpty) {
-                        return 'Required Age ';
+                        return 'Your Age is required';
                       } else if (value.length > 100) {
                         return 'Enter Correct Age';
                       } else {
@@ -123,19 +103,16 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _mobileController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter Mobile No',
-                      labelText: 'Mobile No',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Enter Phone Number';
+                        return 'Your Phone Number is required';
                       } else if (value.length != 10) {
                         return 'Require valid Phone Number';
                       } else {
@@ -143,27 +120,22 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   TextFormField(
                     controller: _schoolController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Enter school name',
-                      labelText: 'School',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Required School Name';
+                        return 'Your School Name is required';
                       } else {
                         return null;
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  kHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
