@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:week_5/db/functions/db_functions.dart';
-import 'package:week_5/screens/home/widgets/add_student_widget.dart';
-import 'package:week_5/screens/home/widgets/list_student_widget.dart';
-import 'package:week_5/screens/home/widgets/search_student.dart';
+import 'package:week_5/model/functions/db_functions.dart';
+import 'package:week_5/view/widgets/add_student_widget.dart';
+import 'package:week_5/view/widgets/list_student_widget.dart';
+import 'package:week_5/view/widgets/search_student.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
@@ -46,7 +46,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AddStudentWidget(),
+              builder: (context) =>  AddStudentWidget(),
             ),
           );
         },

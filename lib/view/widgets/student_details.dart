@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:week_5/core/constants.dart';
-import 'package:week_5/screens/home/widgets/edit_student.dart';
+import 'package:week_5/controller/core/constants.dart';
 
 class StudentDetails extends StatelessWidget {
   final String name;
@@ -34,15 +33,16 @@ class StudentDetails extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
+                  kHeight20,
                   const Center(
                     child: Text(
                       'Student Full Details',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
                     ),
                   ),
-                  kHeight10,
+                  kHeight20,
                   CircleAvatar(
-                    radius: 80,
+                    radius: 100,
                     backgroundImage: FileImage(
                       File(
                         photo,
@@ -56,21 +56,21 @@ class StudentDetails extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  kHeight10,
+                  kHeight20,
                   Text(
                     "Age: $age",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  kHeight10,
+                  kHeight20,
                   Text(
                     "Mobile: $mobile",
                     style: const TextStyle(
                       fontSize: 20,
                     ),
                   ),
-                  kHeight10,
+                  kHeight20,
                   Text(
                     "School: $school",
                     style: const TextStyle(

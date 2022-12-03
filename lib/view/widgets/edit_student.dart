@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:week_5/core/constants.dart';
-import 'package:week_5/db/functions/db_functions.dart';
-import 'package:week_5/db/model/data_model.dart';
+import 'package:week_5/controller/core/constants.dart';
+import 'package:week_5/model/functions/db_functions.dart';
+import 'package:week_5/model/model/data_model.dart';
 
 class EditStudent extends StatefulWidget {
   final String name;

@@ -1,19 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:week_5/core/constants.dart';
-import 'package:week_5/db/functions/db_functions.dart';
-import 'package:week_5/db/model/data_model.dart';
-import 'package:week_5/screens/home/screen_home.dart';
+import 'package:provider/provider.dart';
+import 'package:week_5/controller/core/constants.dart';
+import 'package:week_5/controller/provider/provider_student.dart';
+import 'package:week_5/model/functions/db_functions.dart';
+import 'package:week_5/model/model/data_model.dart';
 
-class AddStudentWidget extends StatefulWidget {
-  const AddStudentWidget({Key? key}) : super(key: key);
+class AddStudentWidget extends StatelessWidget {
+  AddStudentWidget({super.key});
 
-  @override
-  State<AddStudentWidget> createState() => _AddStudentWidgetState();
-}
-
-class _AddStudentWidgetState extends State<AddStudentWidget> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -37,7 +32,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
               child: Column(
                 children: [
                   kHeight10,
-                  _photo?.path == null
+                  Provider.of<ProviderStudent>(context).uphoto?.path == null
                       ? const CircleAvatar(
                           radius: 80,
                           backgroundImage: AssetImage('assets/images/d3.png'),
@@ -45,7 +40,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       : CircleAvatar(
                           backgroundImage: FileImage(
                             File(
-                              _photo!.path,
+                              Provider.of<ProviderStudent>(context).uphoto!.path,
                             ),
                           ),
                           radius: 60,
@@ -58,7 +53,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black, elevation: 10),
                         onPressed: () {
-                          getPhoto();
+                          Provider.of<ProviderStudent>(context).getPhoto();
                         },
                         icon: const Icon(
                           Icons.image_outlined,
@@ -69,7 +64,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       ),
                     ],
                   ),
-                 kHeight10,
+                  kHeight10,
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
@@ -142,8 +137,9 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
                       ElevatedButton.icon(
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
-                              _photo != null) {
-                            onAddStudentButtonClicked();
+                              Provider.of<ProviderStudent>(context).uphoto !=
+                                  null) {
+                            onAddStudentButtonClicked(context);
                             Navigator.of(context).pop();
                           } else {
                             imageAlert = true;
@@ -163,7 +159,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
     );
   }
 
-  Future<void> onAddStudentButtonClicked() async {
+  Future<void> onAddStudentButtonClicked(context) async {
     final name = _nameController.text.trim();
     final age = _ageController.text.trim();
     final mobile = _mobileController.text.trim();
@@ -172,7 +168,7 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
         age.isEmpty ||
         mobile.isEmpty ||
         school.isEmpty ||
-        _photo!.path.isEmpty) {
+        Provider.of<ProviderStudent>(context).uphoto!.path.isEmpty) {
       return;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -189,33 +185,19 @@ class _AddStudentWidgetState extends State<AddStudentWidget> {
       age: age,
       mobile: mobile,
       school: school,
-      photo: _photo!.path,
+      photo: Provider.of<ProviderStudent>(context).uphoto!.path,
     );
     addStudent(student);
   }
 
-  Future<void> navigateToHome() async {
-    getAllStudent();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ScreenHome(),
-      ),
-    );
-  }
+  // Future<void> navigateToHome(context) async {
+  //   getAllStudent();
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const ScreenHome(),
+  //     ),
+  //   );
+  // }
 
-  File? _photo;
-  Future<void> getPhoto() async {
-    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (photo == null) {
-      return;
-    } else {
-      final photoTemp = File(photo.path);
-      setState(
-        () {
-          _photo = photoTemp;
-        },
-      );
-    }
-  }
 }

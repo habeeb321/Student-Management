@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:week_5/db/functions/db_functions.dart';
-import 'package:week_5/db/model/data_model.dart';
-import 'package:week_5/screens/home/widgets/edit_student.dart';
-import 'package:week_5/screens/home/widgets/student_details.dart';
+import 'package:week_5/model/functions/db_functions.dart';
+import 'package:week_5/model/model/data_model.dart';
+import 'package:week_5/view/widgets/edit_student.dart';
+import 'package:week_5/view/widgets/student_details.dart';
 
 class ListStudentWidget extends StatelessWidget {
   const ListStudentWidget({super.key});

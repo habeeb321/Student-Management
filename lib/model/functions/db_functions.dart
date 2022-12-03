@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:week_5/db/model/data_model.dart';
+import 'package:week_5/model/model/data_model.dart';
 
 ValueNotifier<List<StudentModel>> studentListNotifier = ValueNotifier([]);
 
