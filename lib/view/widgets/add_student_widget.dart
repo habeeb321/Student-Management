@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,6 +6,7 @@ import 'package:week_5/controller/core/constants.dart';
 import 'package:week_5/controller/provider/provider_student.dart';
 import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
+import 'package:week_5/view/widgets/screen_home.dart';
 
 class AddStudentWidget extends StatelessWidget {
   AddStudentWidget({super.key});
@@ -19,6 +21,7 @@ class AddStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log('rebuild screen');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Details'),
@@ -31,20 +34,30 @@ class AddStudentWidget extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  kHeight10,
-                  Provider.of<ProviderStudent>(context).uphoto?.path == null
-                      ? const CircleAvatar(
-                          radius: 80,
-                          backgroundImage: AssetImage('assets/images/d3.png'),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: FileImage(
-                            File(
-                              Provider.of<ProviderStudent>(context).uphoto!.path,
-                            ),
-                          ),
-                          radius: 60,
+                  Consumer<ProviderStudent>(
+                    builder: (context, value, child) {
+                      log('rebuild image');
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: value.uphoto?.path == null
+                              ? const CircleAvatar(
+                                  radius: 100,
+                                  backgroundImage:
+                                      AssetImage('assets/images/d3.png'),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: FileImage(
+                                    File(
+                                      value.uphoto!.path,
+                                    ),
+                                  ),
+                                  radius: 100,
+                                ),
                         ),
+                      );
+                    },
+                  ),
                   kHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +66,8 @@ class AddStudentWidget extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black, elevation: 10),
                         onPressed: () {
-                          Provider.of<ProviderStudent>(context).getPhoto();
+                          Provider.of<ProviderStudent>(context, listen: false)
+                              .getPhoto();
                         },
                         icon: const Icon(
                           Icons.image_outlined,
@@ -137,7 +151,9 @@ class AddStudentWidget extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
-                              Provider.of<ProviderStudent>(context).uphoto !=
+                              Provider.of<ProviderStudent>(context,
+                                          listen: false)
+                                      .uphoto !=
                                   null) {
                             onAddStudentButtonClicked(context);
                             Navigator.of(context).pop();
@@ -168,7 +184,10 @@ class AddStudentWidget extends StatelessWidget {
         age.isEmpty ||
         mobile.isEmpty ||
         school.isEmpty ||
-        Provider.of<ProviderStudent>(context).uphoto!.path.isEmpty) {
+        Provider.of<ProviderStudent>(context, listen: false)
+            .uphoto!
+            .path
+            .isEmpty) {
       return;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -179,25 +198,23 @@ class AddStudentWidget extends StatelessWidget {
         ),
       );
     }
-    stdout.write('$name $age $mobile $school');
     final student = StudentModel(
       name: name,
       age: age,
       mobile: mobile,
       school: school,
-      photo: Provider.of<ProviderStudent>(context).uphoto!.path,
+      photo: Provider.of<ProviderStudent>(context, listen: false).uphoto!.path,
     );
     addStudent(student);
   }
 
-  // Future<void> navigateToHome(context) async {
-  //   getAllStudent();
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => const ScreenHome(),
-  //     ),
-  //   );
-  // }
-
+  Future<void> navigateToHome(context) async {
+    getAllStudent();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ScreenHome(),
+      ),
+    );
+  }
 }
