@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:week_5/controller/core/constants.dart';
+import 'package:week_5/controller/provider/provider_student.dart';
 import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
 
-class EditStudent extends StatefulWidget {
+class EditStudent extends StatelessWidget {
   final String name;
   final String age;
   final String mobile;
@@ -12,7 +14,7 @@ class EditStudent extends StatefulWidget {
   final String image;
   final int index;
 
-  const EditStudent({
+  EditStudent({
     super.key,
     required this.name,
     required this.age,
@@ -23,11 +25,6 @@ class EditStudent extends StatefulWidget {
     required String photo,
   });
 
-  @override
-  State<EditStudent> createState() => _EditStudentState();
-}
-
-class _EditStudentState extends State<EditStudent> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
   TextEditingController _mobileController = TextEditingController();
@@ -36,19 +33,15 @@ class _EditStudentState extends State<EditStudent> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _ageController = TextEditingController(text: widget.age);
-    _mobileController = TextEditingController(text: widget.mobile);
-    _schoolController = TextEditingController(text: widget.school);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _nameController = TextEditingController(text: name);
+    _ageController = TextEditingController(text: age);
+    _mobileController = TextEditingController(text: mobile);
+    _schoolController = TextEditingController(text: school);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Student Details'),
+        title: const Text('Edit Student Details'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
@@ -58,18 +51,44 @@ class _EditStudentState extends State<EditStudent> {
               key: _formKey,
               child: Column(
                 children: [
-                  const Text(
-                    'Edit Student Details',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  kHeight10,
+                  Consumer<ProviderStudent>(
+                    builder: (context, value, child) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20,
+                          ),
+                          child: CircleAvatar(
+                            backgroundImage: FileImage(
+                              File(value.uphoto!.path),
+                            ),
+                            radius: 100,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   kHeight10,
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundImage: FileImage(
-                      File(widget.image),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black, elevation: 10),
+                        onPressed: () {
+                          Provider.of<ProviderStudent>(context, listen: false)
+                              .getPhoto();
+                        },
+                        icon: const Icon(
+                          Icons.image_outlined,
+                        ),
+                        label: const Text(
+                          'Update Image',
+                        ),
+                      ),
+                    ],
                   ),
-                  kHeight10,
                   kHeight10,
                   TextFormField(
                     controller: _nameController,
@@ -168,9 +187,25 @@ class _EditStudentState extends State<EditStudent> {
       age: _ageController.text,
       mobile: _mobileController.text,
       school: _schoolController.text,
-      photo: widget.image,
+      photo: Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path,
     );
-    editList(widget.index, studentmodel);
-    Navigator.of(context).pop();
+    editList(index, studentmodel);
+    Navigator.of(ctx).pop();
+
+    if (name.isEmpty ||
+        age.isEmpty ||
+        mobile.isEmpty ||
+        school.isEmpty ||
+        Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path.isEmpty) {
+      return;
+    } else {
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(20),
+          content: Text("Student Updated Sucessfully"),
+        ),
+      );
+    }
   }
 }

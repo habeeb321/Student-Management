@@ -21,6 +21,7 @@ class AddStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<ProviderStudent>(context).uphoto == null;
     log('rebuild screen');
     return Scaffold(
       appBar: AppBar(
