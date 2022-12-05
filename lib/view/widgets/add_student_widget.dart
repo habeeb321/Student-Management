@@ -6,7 +6,6 @@ import 'package:week_5/controller/core/constants.dart';
 import 'package:week_5/controller/provider/provider_student.dart';
 import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
-import 'package:week_5/view/widgets/screen_home.dart';
 
 class AddStudentWidget extends StatelessWidget {
   AddStudentWidget({super.key});
@@ -21,11 +20,16 @@ class AddStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProviderStudent>(context).uphoto == null;
+    final studentIdProvider =
+        Provider.of<ProviderStudent>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      studentIdProvider.uphoto = null;
+    });
     log('rebuild screen');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Student Details'),
+        centerTitle: true,
       ),
       body: SafeArea(
         child: Padding(
@@ -36,12 +40,12 @@ class AddStudentWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Consumer<ProviderStudent>(
-                    builder: (context, value, child) {
+                    builder: (context, value, Widget? child) {
                       log('rebuild image');
                       return Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 30),
-                          child: value.uphoto?.path == null
+                          child: value.uphoto == null
                               ? const CircleAvatar(
                                   radius: 100,
                                   backgroundImage:
@@ -67,8 +71,7 @@ class AddStudentWidget extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black, elevation: 10),
                         onPressed: () {
-                          Provider.of<ProviderStudent>(context, listen: false)
-                              .getPhoto();
+                          studentIdProvider.getPhoto();
                         },
                         icon: const Icon(
                           Icons.image_outlined,
@@ -152,10 +155,7 @@ class AddStudentWidget extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
-                              Provider.of<ProviderStudent>(context,
-                                          listen: false)
-                                      .uphoto !=
-                                  null) {
+                              studentIdProvider.uphoto != null) {
                             onAddStudentButtonClicked(context);
                             Navigator.of(context).pop();
                           } else {
@@ -207,15 +207,6 @@ class AddStudentWidget extends StatelessWidget {
       photo: Provider.of<ProviderStudent>(context, listen: false).uphoto!.path,
     );
     addStudent(student);
-  }
-
-  Future<void> navigateToHome(context) async {
     getAllStudent();
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const ScreenHome(),
-      ),
-    );
   }
 }

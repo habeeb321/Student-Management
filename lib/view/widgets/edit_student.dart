@@ -61,7 +61,7 @@ class EditStudent extends StatelessWidget {
                           ),
                           child: CircleAvatar(
                             backgroundImage: FileImage(
-                              File(value.uphoto!.path),
+                              File(value.uphoto?.path ?? ''),
                             ),
                             radius: 100,
                           ),
@@ -75,7 +75,8 @@ class EditStudent extends StatelessWidget {
                     children: [
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black, elevation: 10),
+                            backgroundColor: const Color.fromRGBO(0, 0, 0, 1),
+                            elevation: 10),
                         onPressed: () {
                           Provider.of<ProviderStudent>(context, listen: false)
                               .getPhoto();
@@ -165,6 +166,7 @@ class EditStudent extends StatelessWidget {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             onEditSaveButton(context);
+                            Navigator.pop(context);
                           }
                         },
                         icon: const Icon(Icons.check),
@@ -191,7 +193,6 @@ class EditStudent extends StatelessWidget {
     );
     editList(index, studentmodel);
     Navigator.of(ctx).pop();
-
     if (name.isEmpty ||
         age.isEmpty ||
         mobile.isEmpty ||

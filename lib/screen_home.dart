@@ -2,38 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/view/widgets/add_student_widget.dart';
 import 'package:week_5/view/widgets/list_student_widget.dart';
-import 'package:week_5/view/widgets/search_student.dart';
 
-class ScreenHome extends StatefulWidget {
+class ScreenHome extends StatelessWidget {
   const ScreenHome({super.key});
 
   @override
-  State<ScreenHome> createState() => _ScreenHomeState();
-}
-
-class _ScreenHomeState extends State<ScreenHome> {
-  @override
-  void initState() {
-    super.initState();
-    getAllStudent();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    getAllStudent();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: Search(),
-              );
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       showSearch(
+        //         context: context,
+        //         delegate: Search(),
+        //       );
+        //     },
+        //     icon: const Icon(Icons.search),
+        //   ),
+        // ],
       ),
       body: const SafeArea(
         child: Padding(
@@ -46,7 +35,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>  AddStudentWidget(),
+              builder: (context) => AddStudentWidget(),
             ),
           );
         },

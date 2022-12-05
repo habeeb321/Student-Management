@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:week_5/controller/core/constants.dart';
+import 'package:week_5/view/widgets/edit_student.dart';
 
 class StudentDetails extends StatelessWidget {
   final String name;
@@ -37,7 +38,8 @@ class StudentDetails extends StatelessWidget {
                   const Center(
                     child: Text(
                       'Student Full Details',
-                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ),
                   kHeight20,
@@ -83,6 +85,24 @@ class StudentDetails extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => EditStudent(
+                name: name,
+                age: age,
+                mobile: mobile,
+                school: school,
+                index: index,
+                image: photo,
+                photo: '',
+              ),
+            ),
+          );
+        },
+        label: const Text('Edit'),
       ),
     );
   }
