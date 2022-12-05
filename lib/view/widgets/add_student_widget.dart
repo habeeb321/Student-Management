@@ -20,10 +20,10 @@ class AddStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final studentIdProvider =
+    final studentProvider =
         Provider.of<ProviderStudent>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      studentIdProvider.uphoto = null;
+      studentProvider.uphoto = null;
     });
     log('rebuild screen');
     return Scaffold(
@@ -71,7 +71,7 @@ class AddStudentWidget extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.black, elevation: 10),
                         onPressed: () {
-                          studentIdProvider.getPhoto();
+                          studentProvider.getPhoto();
                         },
                         icon: const Icon(
                           Icons.image_outlined,
@@ -99,6 +99,7 @@ class AddStudentWidget extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _ageController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -118,6 +119,7 @@ class AddStudentWidget extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _mobileController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -126,7 +128,7 @@ class AddStudentWidget extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Your Phone Number is required';
-                      } else if (value.length != 10) {
+                      } else if (value.length != 1) {
                         return 'Require valid Phone Number';
                       } else {
                         return null;
@@ -155,7 +157,7 @@ class AddStudentWidget extends StatelessWidget {
                       ElevatedButton.icon(
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
-                              studentIdProvider.uphoto != null) {
+                              studentProvider.uphoto != null) {
                             onAddStudentButtonClicked(context);
                             Navigator.of(context).pop();
                           } else {
@@ -176,37 +178,36 @@ class AddStudentWidget extends StatelessWidget {
     );
   }
 
-  Future<void> onAddStudentButtonClicked(context) async {
+  Future<void> onAddStudentButtonClicked(ctx) async {
     final name = _nameController.text.trim();
     final age = _ageController.text.trim();
     final mobile = _mobileController.text.trim();
     final school = _schoolController.text.trim();
+
     if (name.isEmpty ||
         age.isEmpty ||
         mobile.isEmpty ||
         school.isEmpty ||
-        Provider.of<ProviderStudent>(context, listen: false)
-            .uphoto!
-            .path
-            .isEmpty) {
+        Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path.isEmpty) {
       return;
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.all(20),
-          content: Text("Student Added Successfully"),
-        ),
-      );
     }
+    // else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       behavior: SnackBarBehavior.floating,
+    //       margin: EdgeInsets.all(20),
+    //       content: Text("Student Added Successfully"),
+    //     ),
+    //   );
+    // }
     final student = StudentModel(
       name: name,
       age: age,
       mobile: mobile,
       school: school,
-      photo: Provider.of<ProviderStudent>(context, listen: false).uphoto!.path,
+      photo: Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path,
     );
-    addStudent(student);
-    getAllStudent();
+    Provider.of<FunctionsDB>(ctx, listen: false).addStudent(student);
+    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudent();
   }
 }

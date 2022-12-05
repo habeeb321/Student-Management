@@ -2,32 +2,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:week_5/model/model/data_model.dart';
 
-ValueNotifier<List<StudentModel>> studentListNotifier = ValueNotifier([]);
+class FunctionsDB with ChangeNotifier {
+  static List<StudentModel> studentList = [];
+  Future<void> addStudent(StudentModel value) async {
+    final studentDB = await Hive.openBox<StudentModel>('student_db');
+    await studentDB.put(value.id, value);
+    studentList.add(value);
+    notifyListeners();
+  }
 
-Future<void> addStudent(StudentModel value) async {
-  final studentDB = await Hive.openBox<StudentModel>('student_db');
-  final ids = await studentDB.add(value);
-  value.id = ids;
-  studentListNotifier.value.add(value);
-  studentListNotifier.notifyListeners();
-  getAllStudent();
-}
+  Future<List<StudentModel>> getAllStudent() async {
+    final studentDB = await Hive.openBox<StudentModel>('student_db');
+    studentList.clear();
+    studentList.addAll(studentDB.values);
+    return studentList;
+  }
 
-Future<void> getAllStudent() async {
-  final studentDB = await Hive.openBox<StudentModel>('student_db');
-  studentListNotifier.value.clear();
-  studentListNotifier.value.addAll(studentDB.values);
-  studentListNotifier.notifyListeners();
-}
+  Future<void> deleteStudent(index) async {
+    final studentDB = await Hive.openBox<StudentModel>('student_db');
+    await studentDB.deleteAt(index);
+    getAllStudent();
+    getAllStudent();
+  }
 
-Future<void> deleteStudent(index) async {
-  final studentDB = await Hive.openBox<StudentModel>('student_db');
-  await studentDB.deleteAt(index);
-  getAllStudent();
-}
-
-Future<void> editList(int id, StudentModel value) async {
-  final studentDatabase = await Hive.openBox<StudentModel>('student_db');
-  studentDatabase.putAt(id, value);
-  getAllStudent();
+  Future<void> editList(int id, StudentModel value) async {
+    final studentDatabase = await Hive.openBox<StudentModel>('student_db');
+    studentDatabase.putAt(id, value);
+    getAllStudent();
+    notifyListeners();
+  }
 }

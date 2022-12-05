@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:week_5/controller/provider/provider_student.dart';
+import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
 import 'package:week_5/screen_home.dart';
 
@@ -19,13 +20,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProviderStudent(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProviderStudent()),
+        ChangeNotifierProvider(create: (context) => FunctionsDB()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Login Page',
         theme: ThemeData(primarySwatch: Colors.indigo),
-        home: const ScreenHome(),
+        home: ScreenHome(),
       ),
     );
   }

@@ -38,6 +38,7 @@ class EditStudent extends StatelessWidget {
     _ageController = TextEditingController(text: age);
     _mobileController = TextEditingController(text: mobile);
     _schoolController = TextEditingController(text: school);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Student Details'),
@@ -108,6 +109,7 @@ class EditStudent extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _ageController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -126,6 +128,7 @@ class EditStudent extends StatelessWidget {
                   ),
                   kHeight10,
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: _mobileController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -135,7 +138,7 @@ class EditStudent extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter Phone Number';
-                      } else if (value.length != 10) {
+                      } else if (value.length != 1) {
                         return 'Require valid Phone Number';
                       } else {
                         return null;
@@ -191,7 +194,8 @@ class EditStudent extends StatelessWidget {
       school: _schoolController.text,
       photo: Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path,
     );
-    editList(index, studentmodel);
+    Provider.of<FunctionsDB>(ctx, listen: false).editList(index, studentmodel);
+    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudent();
     Navigator.of(ctx).pop();
     if (name.isEmpty ||
         age.isEmpty ||
