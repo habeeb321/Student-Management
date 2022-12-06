@@ -22,7 +22,7 @@ class StudentModelAdapter extends TypeAdapter<StudentModel> {
       mobile: fields[3] as String,
       school: fields[4] as String,
       photo: fields[5] as String,
-      id: fields[0] as int?,
+      id: fields[0] as String,
     );
   }
 

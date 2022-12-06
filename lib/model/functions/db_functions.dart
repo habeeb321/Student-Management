@@ -8,27 +8,28 @@ class FunctionsDB with ChangeNotifier {
     final studentDB = await Hive.openBox<StudentModel>('student_db');
     await studentDB.put(value.id, value);
     studentList.add(value);
+    getAllStudents();
     notifyListeners();
   }
 
-  Future<List<StudentModel>> getAllStudent() async {
+  Future<List<StudentModel>> getAllStudents() async {
     final studentDB = await Hive.openBox<StudentModel>('student_db');
     studentList.clear();
     studentList.addAll(studentDB.values);
     return studentList;
   }
 
-  Future<void> deleteStudent(index) async {
+  Future<void> deleteStudent(String id) async {
     final studentDB = await Hive.openBox<StudentModel>('student_db');
-    await studentDB.deleteAt(index);
-    getAllStudent();
+    await studentDB.delete(id);
+    getAllStudents();
     notifyListeners();
   }
 
   Future<void> editList(int id, StudentModel value) async {
     final studentDatabase = await Hive.openBox<StudentModel>('student_db');
     studentDatabase.putAt(id, value);
-    getAllStudent();
+    getAllStudents();
     notifyListeners();
   }
 }

@@ -191,24 +191,26 @@ class AddStudentWidget extends StatelessWidget {
         school.isEmpty ||
         Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path.isEmpty) {
       return;
+    } else {
+      Provider.of<ProviderStudent>(ctx, listen: false).getAllStudents();
+      ScaffoldMessenger.of(ctx).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(20),
+          content: Text("Student Added Successfully"),
+        ),
+      );
     }
-    // else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       behavior: SnackBarBehavior.floating,
-    //       margin: EdgeInsets.all(20),
-    //       content: Text("Student Added Successfully"),
-    //     ),
-    //   );
-    // }
     final student = StudentModel(
       name: name,
       age: age,
       mobile: mobile,
       school: school,
       photo: Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path,
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
     );
+    log(student.name.toString());
     Provider.of<FunctionsDB>(ctx, listen: false).addStudent(student);
-    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudent();
+    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudents();
   }
 }

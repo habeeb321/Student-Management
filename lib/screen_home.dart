@@ -7,53 +7,56 @@ import 'package:week_5/view/widgets/add_student_widget.dart';
 import 'package:week_5/view/widgets/list_student_widget.dart';
 
 class ScreenHome extends StatelessWidget {
-  ScreenHome({super.key});
-  TextEditingController searchController = TextEditingController();
+  ScreenHome({Key? key}) : super(key: key);
+
+  final searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ProviderStudent>(context, listen: false).getAllStudents();
+    final studentProvider =
+        Provider.of<ProviderStudent>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      studentProvider.getAllStudents();
+    });
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       showSearch(
-        //         context: context,
-        //         delegate: Search(),
-        //       );
-        //     },
-        //     icon: const Icon(Icons.search),
-        //   ),
-        // ],
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              CupertinoSearchTextField(
-                padding: const EdgeInsets.all(15),
-                borderRadius: BorderRadius.circular(15),
-                prefixIcon:
-                    const Icon(CupertinoIcons.search, color: Colors.black),
-                style: const TextStyle(color: Colors.black),
-                backgroundColor: Colors.grey.shade300,
-                controller: searchController,
-                onChanged: (value) {
-                  Provider.of<ProviderStudent>(context, listen: false)
-                      .runFilter(value);
-                },
-              ),
-              kHeight10,
-              ListStudentWidget(controller: searchController)
-            ],
+          child: Consumer(
+            builder: (context, ProviderStudent value, Widget? child) {
+              return Column(
+                children: [
+                  CupertinoSearchTextField(
+                    padding: const EdgeInsets.all(15),
+                    borderRadius: BorderRadius.circular(15),
+                    prefixIcon:
+                        const Icon(CupertinoIcons.search, color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
+                    backgroundColor: Colors.grey.shade300,
+                    controller: searchController,
+                    onChanged: (value) {
+                      Provider.of<ProviderStudent>(context, listen: false)
+                          .runFilter(value);
+                    },
+                  ),
+                  kHeight10,
+                  Expanded(
+                    child: ListStudentWidget(
+                      controller: searchController,
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          context.read<ProviderStudent>().uphoto = null;
           Navigator.push(
             context,
             MaterialPageRoute(

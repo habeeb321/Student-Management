@@ -10,6 +10,7 @@ class StudentDetails extends StatelessWidget {
   final String school;
   final String photo;
   final int index;
+  final String? id;
 
   const StudentDetails({
     super.key,
@@ -19,6 +20,7 @@ class StudentDetails extends StatelessWidget {
     required this.school,
     required this.photo,
     required this.index,
+    this.id,
   });
 
   @override
@@ -95,7 +97,7 @@ class StudentDetails extends StatelessWidget {
                 school: school,
                 index: index,
                 image: photo,
-                photo: '',
+                id: id.toString(),
               ),
             ),
           );

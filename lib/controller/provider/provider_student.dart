@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
 
@@ -20,9 +21,14 @@ class ProviderStudent with ChangeNotifier {
 
   List<StudentModel> foundUsers = [];
   Future<void> getAllStudents() async {
-    final students = await FunctionsDB().getAllStudent();
+    final students = await FunctionsDB().getAllStudents();
     foundUsers = students;
+    notifyListeners();
+  }
 
+  void addStudent(data) {
+    foundUsers.clear();
+    foundUsers.addAll(data);
     notifyListeners();
   }
 
@@ -39,5 +45,36 @@ class ProviderStudent with ChangeNotifier {
 
     foundUsers = results;
     notifyListeners();
+  }
+
+  static deleteItem(BuildContext context, String id) async {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          content: const Text('Are you sure want to delete this ?'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('No')),
+            TextButton(
+                onPressed: () {
+                  Provider.of<FunctionsDB>(context, listen: false)
+                      .deleteStudent(id);
+                  Provider.of<ProviderStudent>(context, listen: false)
+                      .getAllStudents();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Successfully deleted'),
+                    duration: Duration(seconds: 2),
+                  ));
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Yes')),
+          ],
+        );
+      },
+    );
   }
 }

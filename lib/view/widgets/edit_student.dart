@@ -13,6 +13,7 @@ class EditStudent extends StatelessWidget {
   final String school;
   final String image;
   final int index;
+  final String id;
 
   EditStudent({
     super.key,
@@ -22,7 +23,7 @@ class EditStudent extends StatelessWidget {
     required this.school,
     required this.index,
     required this.image,
-    required String photo,
+    required this.id,
   });
 
   TextEditingController _nameController = TextEditingController();
@@ -198,10 +199,11 @@ class EditStudent extends StatelessWidget {
       age: _ageController.text,
       mobile: _mobileController.text,
       school: _schoolController.text,
-      photo: Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path,
+      photo: image.toString(),
+      id: id,
     );
     Provider.of<FunctionsDB>(ctx, listen: false).editList(index, studentmodel);
-    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudent();
+    Provider.of<FunctionsDB>(ctx, listen: false).getAllStudents();
     Navigator.of(ctx).pop();
     if (name.isEmpty ||
         age.isEmpty ||
@@ -210,6 +212,7 @@ class EditStudent extends StatelessWidget {
         Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path.isEmpty) {
       return;
     } else {
+      Provider.of<ProviderStudent>(ctx, listen: false).getAllStudents();
       ScaffoldMessenger.of(ctx).showSnackBar(
         const SnackBar(
           behavior: SnackBarBehavior.floating,
