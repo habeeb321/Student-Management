@@ -14,8 +14,8 @@ class ProviderStudent with ChangeNotifier {
     } else {
       final photoTemp = File(photo.path);
       uphoto = photoTemp;
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   List<StudentModel> foundUsers = [];

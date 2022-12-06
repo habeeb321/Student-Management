@@ -8,7 +8,7 @@ import 'package:week_5/model/functions/db_functions.dart';
 import 'package:week_5/model/model/data_model.dart';
 
 class AddStudentWidget extends StatelessWidget {
-  AddStudentWidget({super.key});
+  AddStudentWidget({Key? key}) : super(key: key);
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -36,6 +36,7 @@ class AddStudentWidget extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
             child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               key: _formKey,
               child: Column(
                 children: [

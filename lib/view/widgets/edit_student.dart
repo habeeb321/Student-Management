@@ -54,18 +54,24 @@ class EditStudent extends StatelessWidget {
                 children: [
                   kHeight10,
                   Consumer<ProviderStudent>(
-                    builder: (context, value, child) {
+                    builder: (context, value, Widget? child) {
                       return Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                          ),
-                          child: CircleAvatar(
-                            backgroundImage: FileImage(
-                              File(value.uphoto?.path ?? ''),
-                            ),
-                            radius: 100,
-                          ),
+                          padding: const EdgeInsets.only(top: 30),
+                          child: value.uphoto == null
+                              ? const CircleAvatar(
+                                  radius: 100,
+                                  backgroundImage:
+                                      AssetImage('assets/images/d3.png'),
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: FileImage(
+                                    File(
+                                      value.uphoto!.path,
+                                    ),
+                                  ),
+                                  radius: 100,
+                                ),
                         ),
                       );
                     },

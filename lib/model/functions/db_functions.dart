@@ -22,7 +22,7 @@ class FunctionsDB with ChangeNotifier {
     final studentDB = await Hive.openBox<StudentModel>('student_db');
     await studentDB.deleteAt(index);
     getAllStudent();
-    getAllStudent();
+    notifyListeners();
   }
 
   Future<void> editList(int id, StudentModel value) async {

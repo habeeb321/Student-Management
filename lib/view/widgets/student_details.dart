@@ -46,9 +46,7 @@ class StudentDetails extends StatelessWidget {
                   CircleAvatar(
                     radius: 100,
                     backgroundImage: FileImage(
-                      File(
-                        photo,
-                      ),
+                      File(photo),
                     ),
                   ),
                   kHeight20,
