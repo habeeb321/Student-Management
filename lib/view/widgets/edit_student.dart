@@ -53,52 +53,25 @@ class EditStudent extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  kHeight10,
-                  Consumer<ProviderStudent>(
-                    builder: (context, value, Widget? child) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 30),
-                          child: value.uphoto == null
-                              ? const CircleAvatar(
-                                  radius: 100,
-                                  backgroundImage:
-                                      AssetImage('assets/images/d3.png'),
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: FileImage(
-                                    File(
-                                      value.uphoto!.path,
-                                    ),
-                                  ),
-                                  radius: 100,
-                                ),
-                        ),
-                      );
-                    },
+                  const Center(
+                    child: Text(
+                      'Update Student Details',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  kHeight10,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(0, 0, 0, 1),
-                            elevation: 10),
-                        onPressed: () {
-                          Provider.of<ProviderStudent>(context, listen: false)
-                              .getPhoto();
-                        },
-                        icon: const Icon(
-                          Icons.image_outlined,
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: CircleAvatar(
+                        backgroundImage: FileImage(
+                          File(image),
                         ),
-                        label: const Text(
-                          'Update Image',
-                        ),
+                        radius: 100,
                       ),
-                    ],
+                    ),
                   ),
-                  kHeight10,
+                  kHeight20,
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
@@ -205,11 +178,7 @@ class EditStudent extends StatelessWidget {
     Provider.of<FunctionsDB>(ctx, listen: false).editList(index, studentmodel);
     Provider.of<FunctionsDB>(ctx, listen: false).getAllStudents();
     Navigator.of(ctx).pop();
-    if (name.isEmpty ||
-        age.isEmpty ||
-        mobile.isEmpty ||
-        school.isEmpty ||
-        Provider.of<ProviderStudent>(ctx, listen: false).uphoto!.path.isEmpty) {
+    if (name.isEmpty || age.isEmpty || mobile.isEmpty || school.isEmpty) {
       return;
     } else {
       Provider.of<ProviderStudent>(ctx, listen: false).getAllStudents();

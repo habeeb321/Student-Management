@@ -30,60 +30,62 @@ class StudentDetails extends StatelessWidget {
         title: const Text('Student Details'),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  kHeight20,
-                  const Center(
-                    child: Text(
-                      'Student Full Details',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    kHeight20,
+                    const Center(
+                      child: Text(
+                        'Student Full Details',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                  CircleAvatar(
-                    radius: 100,
-                    backgroundImage: FileImage(
-                      File(photo),
+                    kHeight20,
+                    CircleAvatar(
+                      radius: 100,
+                      backgroundImage: FileImage(
+                        File(photo),
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                  Text(
-                    "Name: $name",
-                    style: const TextStyle(
-                      fontSize: 20,
+                    kHeight20,
+                    Text(
+                      "Name: $name",
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                  Text(
-                    "Age: $age",
-                    style: const TextStyle(
-                      fontSize: 20,
+                    kHeight20,
+                    Text(
+                      "Age: $age",
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                  Text(
-                    "Mobile: $mobile",
-                    style: const TextStyle(
-                      fontSize: 20,
+                    kHeight20,
+                    Text(
+                      "Mobile: $mobile",
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                  Text(
-                    "School: $school",
-                    style: const TextStyle(
-                      fontSize: 20,
+                    kHeight20,
+                    Text(
+                      "School: $school",
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  kHeight20,
-                ],
+                    kHeight20,
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
