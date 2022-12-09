@@ -4,6 +4,7 @@ import 'package:week_5/model/model/data_model.dart';
 
 class FunctionsDB with ChangeNotifier {
   static List<StudentModel> studentList = [];
+
   Future<void> addStudent(StudentModel value) async {
     final studentDB = await Hive.openBox<StudentModel>('student_db');
     await studentDB.put(value.id, value);

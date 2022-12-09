@@ -129,7 +129,7 @@ class AddStudentWidget extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Your Phone Number is required';
-                      } else if (value.length != 1) {
+                      } else if (value.length != 10) {
                         return 'Require valid Phone Number';
                       } else {
                         return null;

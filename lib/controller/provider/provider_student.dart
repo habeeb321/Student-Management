@@ -50,7 +50,7 @@ class ProviderStudent with ChangeNotifier {
   static deleteItem(BuildContext context, String id) async {
     showDialog(
       context: context,
-      builder: (ctx) {
+      builder: (context) {
         return AlertDialog(
           content: const Text('Are you sure want to delete this ?'),
           actions: [

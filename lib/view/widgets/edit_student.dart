@@ -118,7 +118,7 @@ class EditStudent extends StatelessWidget {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter Phone Number';
-                      } else if (value.length != 1) {
+                      } else if (value.length != 10) {
                         return 'Require valid Phone Number';
                       } else {
                         return null;
@@ -175,9 +175,11 @@ class EditStudent extends StatelessWidget {
       photo: image.toString(),
       id: id,
     );
+
     Provider.of<FunctionsDB>(ctx, listen: false).editList(index, studentmodel);
     Provider.of<FunctionsDB>(ctx, listen: false).getAllStudents();
     Navigator.of(ctx).pop();
+
     if (name.isEmpty || age.isEmpty || mobile.isEmpty || school.isEmpty) {
       return;
     } else {
